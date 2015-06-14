@@ -27,6 +27,10 @@ grub-install /dev/sda
 mkinitcpio -p linux
 grub-config /boot/grub/grub.cfg
 
+umount /mnt/boot
+umount /mnt
+reboot
+
 dhcpcd
 systemctl enable dhcpcd
 
@@ -46,6 +50,11 @@ nano /etc/modules.d/virtualbox.conf (vboxguest vboxsf vboxvideo)
 
 pacman -S xorg-xwm xclock xterm
 
-EDITOR=nano visudo
-useradd -m -g users -G storage,wheel,video baojia
+nano /etc/sudoers
+useradd -m -g users,sudo baojia
+
+pacman -S ttf-dejavu
+
+nano .xinitrc
+exec startlxde
 
