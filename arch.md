@@ -55,6 +55,6 @@ useradd -m -g users,sudo baojia
 
 pacman -S ttf-dejavu
 
+pacman -S enlightenment
 nano .xinitrc
-exec startlxde
-
+exec enlightenment_start
