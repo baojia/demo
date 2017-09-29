@@ -8,13 +8,17 @@ mkswap /dev/sda2 swapon /dev/sda2
 
 mount /dev/sda3 /mnt mkdir /mnt/boot mount /dev/sda1 /mnt/boot
 
-genfstab /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 nano /etc/pacman.d/mirrorlist pacstrap /mnt base base-devel
 
 arch-chroot /mnt
 
-nano /etc/locale.gen locale-gen
+nano /etc/locale.gen
+
+locale-gen
+
+locale > /etc/locale.conf
 
 echo arch >> /etc/hostname
 
@@ -26,26 +30,32 @@ grub-install /dev/sda
 
 mkinitcpio -p linux
 
-grub-config /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
 
 umount /mnt/boot umount /mnt reboot
 
-dhcpcd systemctl enable dhcpcd
+reboot
 
-nano /etc/pacman.conf pacman -Syy pacman -Su
+systemctl enable dhcpcd
 
-pacman -S alsa-utils alsamixer speaker-test -c 2
+nano /etc/pacman.conf
 
-pacman -S xorg-server xorg-server-utils xorg-xinit
+pacman -Syy pacman -Su
+
+pacman -S alsa-utils
+
+pacman -S xorg-server xorg-xinit
 
 pacman -S virtualbox-guest-utils
 
-modprobe -a vboxguest vboxsf vboxvideo nano /etc/modules.d/virtualbox.conf (vboxguest vboxsf vboxvideo)
-
 pacman -S xorg-xwm xclock xterm
 
-nano /etc/sudoers useradd -m -g users,sudo baojia
+nano /etc/sudoers
+
+useradd -m -g users -G adm,lp,wheel,audio,video -s /bin/bash baojia
 
 pacman -S ttf-dejavu
 
-pacman -S enlightenment nano .xinitrc exec enlightenment_start
+pacman -S xfce4 nano .xinitrc exec startxfce4
