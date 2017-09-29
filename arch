@@ -8,9 +8,11 @@ mkswap /dev/sda2 swapon /dev/sda2
 
 mount /dev/sda3 /mnt mkdir /mnt/boot mount /dev/sda1 /mnt/boot
 
-genfstab -U /mnt >> /mnt/etc/fstab
+nano /etc/pacman.d/mirrorlist
 
-nano /etc/pacman.d/mirrorlist pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel
+
+genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
@@ -32,6 +34,8 @@ mkinitcpio -p linux
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
+passwd
+
 exit
 
 umount /mnt/boot umount /mnt reboot
@@ -44,13 +48,11 @@ nano /etc/pacman.conf
 
 pacman -Syy pacman -Su
 
-pacman -S alsa-utils
-
-pacman -S xorg-server xorg-xinit
-
 pacman -S virtualbox-guest-utils
 
-pacman -S xorg-xwm xclock xterm
+pacman -S alsa-utils
+
+pacman -S xorg-server xorg-xinit xorg-xwm xclock xterm
 
 nano /etc/sudoers
 
