@@ -46,7 +46,9 @@ systemctl enable dhcpcd
 
 nano /etc/pacman.conf
 
-pacman -Syy pacman -Su
+pacman -Syy
+
+pacman -Su
 
 pacman -S virtualbox-guest-utils
 
@@ -56,7 +58,10 @@ pacman -S xorg-server xorg-xinit xorg-xwm xclock xterm
 
 nano /etc/sudoers
 
-useradd -m -g users -G adm,lp,wheel,audio,video -s /bin/bash baojia
+useradd -m -g users -G adm,lp,wheel,audio,video -s /bin/bash username
+
+EDITOR=nano visudo
+uncomment %wheel (choose one)
 
 pacman -S ttf-dejavu
 
