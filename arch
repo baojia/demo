@@ -10,13 +10,15 @@ mount /dev/sda3 /mnt mkdir /mnt/boot mount /dev/sda1 /mnt/boot
 
 nano /etc/pacman.d/mirrorlist
 
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel linux linux-firmware
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
 nano /etc/locale.gen
+
+LANG=en_US.UTF-8
 
 locale-gen
 
